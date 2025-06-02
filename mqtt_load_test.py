@@ -19,7 +19,7 @@ num_clients = args.clients
 messages_per_client = args.msgnum
 
 def run_client(client_id):
-    client = mqtt.Client(client_id=f"client_{client_id}", callback_api_version=4)
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id=f"client_{client_id}")
     client.connect(broker, port)
     for i in range(messages_per_client):
         topic = topic_base + str(client_id)
@@ -30,7 +30,7 @@ def run_client(client_id):
 
 
 # Test MQTT broker connection before starting load test
-test_client = mqtt.Client(client_id="test_connection", callback_api_version=4)
+client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="test_connection")
 try:
     test_client.connect(broker, port, keepalive=5)
     test_client.disconnect()
