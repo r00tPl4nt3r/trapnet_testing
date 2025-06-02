@@ -30,8 +30,8 @@ def run_client(client_id):
 
 
 # Test MQTT broker connection before starting load test
-client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="test_connection")
 try:
+    client = mqtt.Client(mqtt.CallbackAPIVersion.VERSION2, client_id="test_connection")
     test_client.connect(broker, port, keepalive=5)
     test_client.disconnect()
 except Exception as e:
