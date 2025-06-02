@@ -31,6 +31,7 @@ def run_client(client_id):
     result = {
         "client_id": client_id,
         "messages_sent": 0,
+        "messages_failed": 0,
         "start_time": time.time(),
         "end_time": None,
         "status": "success",
@@ -38,11 +39,18 @@ def run_client(client_id):
     }
     try:
         client.connect(broker, port)
+        client.loop_start() 
         for i in range(messages_per_client):
             topic = topic_base + str(client_id)
             payload = f"Message {i} from client {client_id}"
-            client.publish(topic, payload)
+            info=client.publish(topic, payload)
+            if info.rc == mqtt.MQTT_ERR_SUCCESS:
+                result["messages_sent"] += 1
+            else:
+                result["messages_failed"] += 1
             time.sleep(random.uniform(0.01, 0.1))  # simulate varied frequency
+        time.sleep(0.2)
+        client.loop_stop()  # stop the loop to ensure all messages are sent
         client.disconnect()
     except Exception as e:
         result["status"] = "error"
@@ -81,7 +89,7 @@ while not results_queue.empty():
 
 with open(report_file, "w", newline="") as f:
     writer = csv.DictWriter(f, fieldnames=[
-        "client_id", "messages_sent", "start_time", "end_time", "duration", "status", "error"
+        "client_id", "messages_sent","messages_failed", "start_time", "end_time", "duration", "status", "error"
     ])
     writer.writeheader()
     for r in results:
