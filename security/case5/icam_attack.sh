@@ -16,7 +16,7 @@ while true; do
         if [ -f "$file" ]; then
         #run the payload_creator.py script with the current file as input
         python3 ./payload_creator.py --image_path "$file" --output_path ./mqtt.payload.icam;
-        mosquitto_pub -h $HOST_TARGET -t "i/cam" -f ./mqtt.payload.icam;
+        mosquitto_pub -h $HOST_TARGET -t "i/cam" -f ./mqtt.payload.icam -d -i "icam_attack";
         #wait 1 second
         sleep 1;
         fi
