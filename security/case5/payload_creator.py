@@ -20,7 +20,9 @@ with open(image_path, "rb") as image_file:
     image_data = f"data:image/png;base64,{encoded_string}"
 
 # Get current UTC timestamp in ISO 8601 format
-timestamp = datetime.datetime.now(datetime.UTC)
+import datetime
+timestamp = datetime.datetime.now(datetime.timezone.utc).isoformat()
+
 
 # Create the payload
 payload = {
