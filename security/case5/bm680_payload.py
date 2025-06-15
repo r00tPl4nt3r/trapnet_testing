@@ -19,7 +19,7 @@ sensor_payload = {
 }
 
 # Save to JSON file
-output_path = '/mnt/data/bme680_latest_output.json'
+output_path = 'mqtt.payload.bme680.json'
 with open(output_path, 'w') as f:
     json.dump(sensor_payload, f, indent=2)
 
