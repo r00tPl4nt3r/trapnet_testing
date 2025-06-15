@@ -1,19 +1,26 @@
 #!/bin/sh
+
+# Set target from args
+if [ -z "$1" ]; then
+  echo "Usage: $0 <target>"
+  exit 1
+fi
+HOST_TARGET=$1
+
 #do in an endless loop
 while true; do
-  #publish the payload to the MQTT broker
-  mosquitto_pub -h 192.168.183.7  -t "i/cam" -f ./mqtt.payload.flag1;
-  #wait 1 second
-  sleep 1;
-  mosquitto_pub -h 192.168.183.7  -t "i/cam" -f ./mqtt.payload.flag2;
-  #wait 1 second
-  sleep 1;
-  mosquitto_pub -h 192.168.183.7  -t "i/cam" -f ./mqtt.payload.flag3;
-  #wait 1 second
-  sleep 1;
-  mosquitto_pub -h 192.168.183.7  -t "i/cam" -f ./mqtt.payload.flag4;
-  #wait 1 second
-  sleep 1;
+  #for every.jpg file in the current directory, tun payload_creator.py
+  #usage: payload_creator.py [-h] --image_path IMAGE_PATH --output_path OUTPUT_PATH
+    for file in *.jpg; do
+        #check if the file exists
+        if [ -f "$file" ]; then
+        #run the payload_creator.py script with the current file as input
+        python3 ./payload_creator.py --image_path "$file" --output_path ./mqtt.payload;
+        mosquitto_pub -h $HOST_TARGET -t "i/cam" -f ./mqtt.payload.flag;
+        #wait 1 second
+        sleep 1;
+        fi
+    done
 
   done
 
