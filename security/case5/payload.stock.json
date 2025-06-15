@@ -1,0 +1,42 @@
+{
+    "stockItems" : 
+    [
+        {
+            "location" : "A1",
+            "workpiece" : 1
+        },
+        {
+            "location" : "A2",
+            "workpiece" : null
+        },
+        {
+            "location" : "A3",
+            "workpiece" : null
+        },
+        {
+            "location" : "B1",
+            "workpiece" : null
+        },
+        {
+            "location" : "B2",
+            "workpiece" : null
+        },
+        {
+            "location" : "B3",
+            "workpiece" : null
+        },
+        {
+            "location" : "C1",
+            "workpiece" : null
+        },
+        {
+            "location" : "C2",
+            "workpiece" : null
+        },
+        {
+            "location" : "C3",
+            "workpiece" : null
+        }
+    ],
+    "ts" : "2024-05-03T13:01:03.810Z"
+}
