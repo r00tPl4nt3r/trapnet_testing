@@ -1,7 +1,14 @@
 import csv
 from opcua import Client, ua
+import argparse
 
-client = Client("opc.tcp://localhost:4840")
+#get server ip from args
+parser = argparse.ArgumentParser(description="Collect OPC UA server data and save it to CSV and JSON files.")
+parser.add_argument('--server_ip', type=str, required=True, help='IP address of the OPC UA server')
+args = parser.parse_args()
+server_ip = args.server_ip
+
+client = Client(f"opc.tcp://{server_ip}:4840")
 client.connect()
 client.load_type_definitions()  # load definition of server specific structures/extension objects
 
